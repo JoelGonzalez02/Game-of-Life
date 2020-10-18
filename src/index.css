@@ -1,0 +1,79 @@
+
+body {
+  background-image: url('https://images.pexels.com/photos/1722072/pexels-photo-1722072.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
+  background-position: center;
+  background-attachment: fixed;
+  /* background-repeat: no-repeat; */
+  background-size: auto;
+}
+
+.box {
+  border: 1px solid black;
+  width: 20px;
+  height: 20px;
+  margin-left: -1px;
+  margin-bottom: -1px;
+}
+
+.off {
+  background-color: lightgrey;
+}
+
+.on {
+  background-color: purple;
+}
+
+.box:hover {
+  background-color: gold;
+}
+
+.center {
+  margin: auto;
+  display: table;
+  margin-top: 10px;
+}
+
+.grid {
+  width: 150px;
+  line-height: 0;
+  margin: auto;
+  box-shadow: 0px 0px 20px lightyellow;
+  margin-top: 20px;
+}
+
+h1, h2, h3, h4 {
+  color: white;
+  margin: auto;
+  text-align: center;
+  width: 50%;
+  margin-top: 10px;
+  text-shadow: 2px 2px rgba(128, 0, 128, 0.788);
+  -webkit-text-stroke: .5px rgba(255, 217, 0, 0.596);
+}
+
+h4 {
+  margin-top: 0px;
+}
+
+h1 {
+  margin-bottom: 5px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 15px 0px;
+}
+
+button {
+  align-items: center;
+  margin-left: 20px;
+  margin-top: 20px;
+  border-radius: 10px;
+  height: 30px;
+  cursor: pointer;
+}
+
+form {
+  padding-left: 20px;
+}
