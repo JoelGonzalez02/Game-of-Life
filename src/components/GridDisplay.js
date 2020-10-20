@@ -26,6 +26,17 @@ const generateEmptyGrid = () => {
   return rows
 }
 
+const changeGridSize = () => {
+  const row = []
+  const numRow = 40
+  const numCol = 40
+  for (let i = 0; i <numRow; i++){
+    row.push(Array.from(Array(numCol), () => 0))
+  }
+
+  return row
+}
+
 
 const GridDisplay = () => {
 
@@ -36,10 +47,10 @@ const GridDisplay = () => {
 
   const [running, setRunning] = useState(false);
   const [speed, setSpeed] = useState(200);
+  var [generations, setGenerations] = useState(0);
 
   const runningRef = useRef(running);
   runningRef.current = running
-
 
 
   const runSimulation = useCallback(() => {
@@ -69,26 +80,60 @@ const GridDisplay = () => {
       })
     })
 
-   
- 
-    setTimeout(runSimulation, speed);
+    setTimeout(runSimulation, speed)
+    setGenerations(generations++)
   }, [])
 
+
+  const nextGeneration = useCallback(() => {
+    if (!runningRef.current){
+      return;
+    }
+    setGrid((g) => {
+      return produce(g, gridCopy => {
+        for (let i = 0; i < numRows; i++){
+          for(let j = 0; j < numCols; j++){
+            let neighbors = 0;
+            operations.forEach(([x, y]) => {
+              const newI = i + x;
+              const newJ = j + y;
+              if (newI >= 0 && newI < numRows && newJ >= 0 && newJ < numCols){
+                neighbors += g[newI][newJ]
+              }
+            })
+
+            if (neighbors < 2 || neighbors > 3) {
+              gridCopy[i][j] = 0;
+            } else if (g[i][j] === 0 && neighbors === 3) {
+              gridCopy[i][j] = 1;
+            }
+          }
+        }
+      })
+    })
+
+    setGenerations(generations++);
+
+  }, [])
+
+
   const handleChange = e => {
-    setSpeed(e.target.value
-    )
+    setSpeed(e.target.value)
   }
 
   const changeSpeed = e => {
     e.preventDefault();
     setSpeed(speed)
     runSimulation();
+    console.log(speed)
   }
+
+  
 
 
   return (
     <>
-    <h1>Game of Life</h1>
+    <h1>Conway's Game of Life</h1>
     {/* //Buttons */}
     <div className='buttons'>
     <button onClick={() => {
@@ -102,6 +147,7 @@ const GridDisplay = () => {
     
     <button onClick={() => {
       setGrid(generateEmptyGrid());
+      setGenerations(0);
     }}>
       Clear
     </button>
@@ -117,19 +163,32 @@ const GridDisplay = () => {
       Random
     </button>
 
+    <button onClick={() => {
+      setRunning(!running);
+      if(!running){
+        runningRef.current = true;
+      nextGeneration();
+      }
+    }}>
+      Next Generation
+    </button>
+
+    {/* <button onClick={() => {
+      setGrid(changeGridSize());
+    }}>40x40 Grid</button> */}
+
     <form onSubmit={changeSpeed}>
-      <input
-        type='number'
-        name='speed'
-        step='100'
-        id='speed'
+      {/* <input
+        type='range'
+        min='50'
+        max='1000'
+        step='50'
         value={speed}
         onChange={handleChange}
-        />
-      <button>Change Speed(ms)</button>
+        /> */}
+      <button>Go faster!</button>
     </form>
 
-    {/* <NumberForm setSpeed={setSpeed} speed={speed} runSimulation={runSimulation}/> */}
 
     </div>
 
@@ -140,7 +199,7 @@ const GridDisplay = () => {
       justifyContent: 'center',
       margin: '0 auto',
       backgroundColor: 'purple',
-      width: '36%',
+      width: '36.2%',
     
     }}>
       
@@ -155,7 +214,16 @@ const GridDisplay = () => {
         }}
         className='box'
         style={{
+          boxShadow: grid[i][j] ? '0px 0px 5px lightblue' : undefined,
           backgroundColor: grid[i][j] ? 'gold' : undefined}}/>))}
+
+
+        <div className='counter' >
+          <h2>Generations:{generations} </h2> 
+        </div>
+        
+
+        
     </div>
     </>
   )
