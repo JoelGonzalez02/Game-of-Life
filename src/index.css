@@ -13,6 +13,7 @@ body {
   height: 20px;
   margin-left: -1px;
   margin-bottom: -1px;
+  border-radius: 10px;
 }
 
 .off {
@@ -86,6 +87,23 @@ input {
 }
 
 .counter {
+  background-color: rgba(211, 211, 211, 0.562);
+  border: 1px solid black;
+  width: 190px;
   margin-left: 500px;
   margin-top: -50px;
+  border-radius: 10px;
+}
+
+.counterText {
+  margin-top: 20px;
+  margin-left: 22px;
+}
+
+.modalH2 {
+  color: black;
+}
+
+p {
+  font-family: 'Raleway', sans-serif;
 }
