@@ -168,7 +168,7 @@ const App = () => {
 
     <form onSubmit={changeSpeed}>
       {/* <input
-        type='text'
+        type='number'
         min='100'
         max='1000'
         step='100'
@@ -185,11 +185,6 @@ const App = () => {
         style={{
           display: "grid",
           gridTemplateColumns: `repeat(${numCols}, 20px)`,
-          justifyContent: 'center',
-          margin: '0 auto',
-          backgroundColor: '#C724B1',
-          width: '36.2%',
-          borderRadius: '10px'
         }}
       >
 
